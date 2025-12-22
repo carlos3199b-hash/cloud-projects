@@ -1,0 +1,21 @@
+tasks:
+  - name: gcloud-sdk
+    before: |
+      # Add Google Cloud SDK repo
+      echo "deb [signed-by=/usr/share/keyrings/cloud.google.gpg] http://packages.cloud.google.com/apt cloud-sdk main" | sudo tee -a /etc/apt/sources.list.d/google-cloud-sdk.list
+      curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo gpg --dearmor -o /usr/share/keyrings/cloud.google.gpg
+      sudo apt-get update
+    init: |
+      # Install gcloud and kubectl
+      sudo apt-get install -y google-cloud-sdk kubectl google-cloud-sdk-gke-gcloud-auth-plugin
+    command: |
+      # Verify installation
+      gcloud --version
+      kubectl version --client
+      echo "Ready to build on iPad!"
+
+vscode:
+  extensions:
+    - googlecloudtools.cloudcode
+    - ms-kubernetes-tools.vscode-kubernetes
+    - hashicorp.terraform
